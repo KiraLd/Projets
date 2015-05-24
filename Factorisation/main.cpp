@@ -17,6 +17,7 @@ int main(int argc, char* argv[])
 	ZZ n;
 	n = k.getN();
 	ZZ p;
+	/*
 	cout<<"Tentatives de factorisation de "<<n<<" par divisions successives"<<endl;
 	p = divisions_successives(n);
 	cout<<"Facteur obtenu: "<<p<<endl;
@@ -40,6 +41,11 @@ int main(int argc, char* argv[])
 	cout<<"Tentatives de factorisation de "<<n<<" par essais aléatoires"<<endl;
 	p = aleatoire(n);
 	cout<<"Facteur obtenu: "<<p<<endl;
+	cout<<"Tentatives de factorisation de "<<n<<" par ECM allégé"<<endl;
+	p = ecm_min(n);
+	cout<<"Facteur obtenu: "<<p<<endl;
+	*/
+	test_execution(rho);
 	
 
 }

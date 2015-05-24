@@ -182,6 +182,8 @@ ZZ pMoinsUn(ZZ& n)
 			{
 				p = p % n;
 			}
+			
+			i++;
 			d = GCD(p-1,n);
 			if(d > 1 && d < n)
 			{
@@ -189,15 +191,8 @@ ZZ pMoinsUn(ZZ& n)
 				std::cout<<"Temps d'exécutions(p-1) "<<duree<<" s"<<std::endl;
 				return d;
 			}
-			if(d == n)
-			{
-				i = 16;
-			}
-			else
-			{
-				i++;
-			}
 		}
+		
 		a++;
 		a = NextPrime(a);
 		p = a;
@@ -256,9 +251,8 @@ ZZ rho(ZZ& n)
 	ZZ d;
 	while(1)
 	{
-		a = (a*a + c)%n;
-		b = (b*b + c)%n;
-		b = (b*b + c)%n;
+		a = (a*a+1)%n;
+		b = (b*b*b*b +2*b*b + 2)%n;
 		d = GCD(abs(a-b),n);
 		if(d > 1 && d < n)
 		{
@@ -337,4 +331,65 @@ ZZ ecm(ZZ& n)
 		}
 	}
 	return n;
+}
+
+ZZ ecm_min(ZZ& n)
+{
+
+	std::clock_t t;
+	double duree;
+	t = std::clock();
+
+	ZZ seed;
+	std::srand(std::time(0));
+	seed = std::rand();
+	ZZ x;
+	ZZ y;
+	ZZ a;
+	ZZ b;
+	ZZ d;
+
+	while(1)
+	{
+		x = RandomBnd(n);
+		y = RandomBnd(n);
+		a = RandomBnd(n);
+
+		
+		b = (y*y - x*x*x - a*x)%n;
+		d = GCD(4*a*a*a - 27*b*b,n);
+		if(d >1 && d < n)
+		{
+			duree =( std::clock() - t ) / (double)CLOCKS_PER_SEC;
+			std::cout<<"Temps d'exécutions(ECM) "<<duree<<" s"<<std::endl;
+			return d;
+		}
+	}
+}
+
+void test_execution(ZZ (&algo)(ZZ&))
+{
+	RSAKey* k;
+	ZZ n;
+	ZZ p;
+	std::cout<<"Tests d'exécution:"<<std::endl;
+	for(int i = 32; i < 129; i++)
+	{
+		k = new RSAKey(i);
+		n = k->getN();
+		std::cout<<"Taille :"<<i<<" bits"<<std::endl;
+		p = algo(n);
+		if(n % p == 0 &&  p != n)
+		{
+			std::cout<<"Résultat correct: "<<n<<" "<<p<<std::endl;
+		}
+		delete k;
+	}
+}
+
+ZZ f(ZZ x)
+{
+	ZZ f_x;
+	f_x = x*x+1;
+	return f_x;
 }

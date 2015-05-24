@@ -118,5 +118,9 @@ ZZ fermat(ZZ& n);
 ZZ pMoinsUn(ZZ& n);
 ZZ rho(ZZ& n);
 ZZ ecm(ZZ& n);
+ZZ ecm_min(ZZ& n);
+
+void test_execution(ZZ (&algo)(ZZ&));
+ZZ f(ZZ x);
 
 #endif
